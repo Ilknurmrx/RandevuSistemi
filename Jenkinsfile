@@ -42,7 +42,7 @@ pipeline {
         stage('Docker Build & Deploy') {
             steps {
                 echo 'Docker containerları ayağa kaldırılıyor...'
-                sh 'docker-compose up -d --build'
+                sh 'docker compose up -d --build'
                 // Uygulamanın ayağa kalkması için kısa bir bekleme
                 sleep 10
             }
