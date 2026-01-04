@@ -15,6 +15,7 @@ public class OgrenciKayitTest extends BaseSeleniumTest {
         driver.findElement(By.name("kullaniciAdi")).sendKeys("ogrenci" + System.currentTimeMillis());
         driver.findElement(By.name("sifre")).sendKeys("1234");
         driver.findElement(By.name("telefon")).sendKeys("5551112233");
+        driver.findElement(By.name("email")).sendKeys("test_ogrenci@test.com");
         // Varsayılan rol zaten öğrenci
         driver.findElement(By.tagName("button")).click();
 

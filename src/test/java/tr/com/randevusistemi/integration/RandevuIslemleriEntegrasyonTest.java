@@ -19,7 +19,8 @@ public class RandevuIslemleriEntegrasyonTest extends BaseIntegrationTest {
         ogrenci.setSoyad("Can");
         ogrenci.setKullaniciAdi("ogr_integ");
         ogrenci.setSifre("123");
-        ogrenci.setTelefon("111");
+        ogrenci.setTelefon("5554443322");
+        ogrenci.setEmail("ogrenci@test.com");
         ogrenci.setRol(2);
         kullaniciServisi.kayitOl(ogrenci);
 
@@ -29,7 +30,8 @@ public class RandevuIslemleriEntegrasyonTest extends BaseIntegrationTest {
         ogretmen.setSoyad("Hoca");
         ogretmen.setKullaniciAdi("hoca_integ");
         ogretmen.setSifre("123");
-        ogretmen.setTelefon("222");
+        ogretmen.setTelefon("5551112233");
+        ogretmen.setEmail("ogretmen@test.com");
         ogretmen.setRol(1);
         kullaniciServisi.kayitOl(ogretmen);
 
@@ -52,7 +54,8 @@ public class RandevuIslemleriEntegrasyonTest extends BaseIntegrationTest {
         ogrenci.setSoyad("Veli");
         ogrenci.setKullaniciAdi("ali_veli");
         ogrenci.setSifre("123");
-        ogrenci.setTelefon("555");
+        ogrenci.setTelefon("5556667788");
+        ogrenci.setEmail("ali@test.com");
         ogrenci.setRol(2);
         kullaniciServisi.kayitOl(ogrenci);
 
@@ -61,7 +64,8 @@ public class RandevuIslemleriEntegrasyonTest extends BaseIntegrationTest {
         ogretmen.setSoyad("Yilmaz");
         ogretmen.setKullaniciAdi("ayse_hoca");
         ogretmen.setSifre("123");
-        ogretmen.setTelefon("666");
+        ogretmen.setTelefon("5559998877");
+        ogretmen.setEmail("ayse@test.com");
         ogretmen.setRol(1);
         kullaniciServisi.kayitOl(ogretmen);
 

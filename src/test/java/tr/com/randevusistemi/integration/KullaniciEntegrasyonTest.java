@@ -15,6 +15,7 @@ public class KullaniciEntegrasyonTest extends BaseIntegrationTest {
         kullanici.setKullaniciAdi("entegrasyon_user");
         kullanici.setSifre("pass");
         kullanici.setTelefon("5551112233");
+        kullanici.setEmail("test@test.com");
         kullanici.setRol(2); // Öğrenci
 
         // Servis üzerinden kayıt

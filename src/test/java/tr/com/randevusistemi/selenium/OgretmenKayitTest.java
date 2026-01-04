@@ -15,6 +15,7 @@ public class OgretmenKayitTest extends BaseSeleniumTest {
         driver.findElement(By.name("kullaniciAdi")).sendKeys("hoca" + System.currentTimeMillis());
         driver.findElement(By.name("sifre")).sendKeys("1234");
         driver.findElement(By.name("telefon")).sendKeys("5559998877");
+        driver.findElement(By.name("email")).sendKeys("test_hoca@test.com");
         driver.findElement(By.name("rol")).sendKeys("Öğretmenim");
 
         driver.findElement(By.tagName("button")).click();
