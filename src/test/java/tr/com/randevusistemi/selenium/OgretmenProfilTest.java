@@ -35,7 +35,9 @@ public class OgretmenProfilTest extends BaseSeleniumTest {
         driver.findElement(By.name("brans")).sendKeys("Matematik");
         driver.findElement(By.tagName("button")).click();
 
-        // Geri panele dönmeli
+        new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(5))
+                .until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("/ogretmen"));
+
         assertTrue(driver.getCurrentUrl().contains("/ogretmen"), "Profil kaydı sonrası panele dönmeli");
     }
 }
