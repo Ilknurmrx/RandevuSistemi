@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        PATH = "/usr/local/bin:${env.PATH}"
         DB_HOST = 'db'
         DB_NAME = 'randevu_sistemi'
         DB_USER = 'postgres'
