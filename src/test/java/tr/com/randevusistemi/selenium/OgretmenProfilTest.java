@@ -16,7 +16,8 @@ public class OgretmenProfilTest extends BaseSeleniumTest {
         driver.findElement(By.name("soyad")).sendKeys("Hoca");
         driver.findElement(By.name("kullaniciAdi")).sendKeys(kadi);
         driver.findElement(By.name("sifre")).sendKeys("pass");
-        driver.findElement(By.name("telefon")).sendKeys("555");
+        driver.findElement(By.name("telefon")).sendKeys("5559876543");
+        driver.findElement(By.name("email")).sendKeys("hoca_profil@test.com");
         driver.findElement(By.name("rol")).sendKeys("Öğretmenim");
         driver.findElement(By.tagName("button")).click();
 

@@ -16,7 +16,8 @@ public class OgrenciVitrinTest extends BaseSeleniumTest {
         driver.findElement(By.name("soyad")).sendKeys("Bakici");
         driver.findElement(By.name("kullaniciAdi")).sendKeys(kadi);
         driver.findElement(By.name("sifre")).sendKeys("pass");
-        driver.findElement(By.name("telefon")).sendKeys("555");
+        driver.findElement(By.name("telefon")).sendKeys("5551234455");
+        driver.findElement(By.name("email")).sendKeys("vitrin_ogr@test.com");
         driver.findElement(By.tagName("button")).click();
 
         // Giriş
