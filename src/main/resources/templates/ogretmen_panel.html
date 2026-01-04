@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Öğretmen Paneli - Randevu Sistemi</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">Öğretmen Paneli</div>
+        <div>
+            <span>Hoşgeldin, <strong th:text="${kullanici.adSoyad}"></strong></span>
+            <a href="/ogretmen/profil" class="btn btn-secondary" style="margin-left: 15px; padding: 8px 20px;">Profil
+                Düzenle</a>
+            <a href="/mesajlar" class="btn btn-secondary" style="margin-left: 10px; padding: 8px 15px;">💬 Mesajlar</a>
+            <a href="/cikis" class="btn btn-danger logout-btn" style="margin-left: 10px;">Çıkış Yap</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Randevu Talepleri Section -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h3>Randevu Talepleri</h3>
+            <div th:if="${talepler.empty}" style="color: #666; font-style: italic;">Henüz talep yok.</div>
+            <table th:unless="${talepler.empty}">
+                <thead>
+                    <tr>
+                        <th>Öğrenci</th>
+                        <th>Telefon</th>
+                        <th>Tarih</th>
+                        <th>Durum</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="talep : ${talepler}">
+                        <td th:text="${talep.ogrenci.adSoyad}"></td>
+                        <td>
+                            <span th:if="${talep.durum == 'BEKLIYOR'}"
+                                style="color: #999; font-style: italic;">Gizli</span>
+                            <span th:unless="${talep.durum == 'BEKLIYOR'}" th:text="${talep.ogrenci.telefon}"></span>
+                        </td>
+                        <td th:text="${#temporals.format(talep.olusturulmaTarihi, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td>
+                            <span th:text="${talep.durum}" class="badge"
+                                th:style="${talep.durum == 'TAMAMLANDI' ? 'color:green; font-weight:bold' : (talep.durum == 'BEKLIYOR' ? 'color:orange; font-weight:bold' : 'color:blue; font-weight:bold')}">
+                            </span>
+                        </td>
+                        <td>
+                            <a th:if="${talep.durum == 'BEKLIYOR'}"
+                                th:href="@{/ogretmen/talep/{id}/GORULDU(id=${talep.id})}" class="btn btn-secondary"
+                                style="padding: 5px 15px; font-size: 0.85rem;">Görüntüle</a>
+                            <a th:if="${talep.durum == 'GORULDU'}"
+                                th:href="@{/ogretmen/talep/{id}/ILETISIM_KURULDU(id=${talep.id})}" class="btn"
+                                style="padding: 5px 15px; font-size: 0.85rem;">📞 İletişime Geçtim</a>
+                            <a th:if="${talep.durum == 'ILETISIM_KURULDU'}"
+                                th:href="@{/ogretmen/talep/{id}/TAMAMLANDI(id=${talep.id})}" class="btn btn-secondary"
+                                style="padding: 5px 15px; font-size: 0.85rem;">Ders Tamamlandı</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Müsaitlik Durumu Section -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h3>Müsaitlik Durumu</h3>
+            <p style="color: #666; font-size: 0.9em; margin-bottom: 15px;">Ders verebileceğiniz günleri seçiniz.</p>
+            <form action="/ogretmen/musaitlik" method="post" th:object="${musaitlik}">
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <label class="checkbox-container">Pazartesi
+                        <input type="checkbox" th:field="*{pazartesi}" name="pazartesi">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">Salı
+                        <input type="checkbox" th:field="*{sali}" name="sali">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">Çarşamba
+                        <input type="checkbox" th:field="*{carsamba}" name="carsamba">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">Perşembe
+                        <input type="checkbox" th:field="*{persembe}" name="persembe">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">Cuma
+                        <input type="checkbox" th:field="*{cuma}" name="cuma">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">Cumartesi
+                        <input type="checkbox" th:field="*{cumartesi}" name="cumartesi">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">Pazar
+                        <input type="checkbox" th:field="*{pazar}" name="pazar">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <button type="submit" class="btn">Güncelle</button>
+            </form>
+        </div>
+
+        <!-- Profil & Yorumlar Section -->
+        <div class="card">
+            <h3>Profil Durumu & Yorumlar</h3>
+            <div style="background: #f1f2f6; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                <strong>Onay Durumu:</strong>
+                <span th:if="${detay != null && detay.onayli}" style="color: #00b894; font-weight: bold;">
+                    ✅ Onaylı (Mavi Tik)
+                </span>
+                <span th:unless="${detay != null && detay.onayli}" style="color: #e17055; font-weight: bold;">
+                    ⏳ Onay Bekliyor
+                </span>
+            </div>
+
+            <h4>Öğrenci Yorumları:</h4>
+            <div th:if="${yorumlar.empty}" style="color: #666;">Henüz yorum yapılmamış.</div>
+            <div th:each="yorum : ${yorumlar}" style="border-bottom: 1px solid #eee; padding: 10px 0;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #fdcb6e; font-size: 1.2rem;">★</span>
+                    <strong th:text="${yorum.puan}"></strong>
+                    <span style="color: #b2bec3;">|</span>
+                    <span th:text="${yorum.ogrenci.ad}" style="color: #636e72; font-size: 0.9em;"></span>
+                </div>
+                <p th:text="${yorum.yorum}" style="margin: 5px 0 0 0; color: #2d3436;"></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

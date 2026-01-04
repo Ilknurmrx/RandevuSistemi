@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Admin Paneli - Randevu Sistemi</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo" style="color: #d63031;">Yönetici Paneli</div>
+        <div>
+            <a href="/mesajlar" class="btn btn-secondary" style="margin-right: 15px;">💬 Mesajlar</a>
+            <a href="/cikis" class="btn btn-danger logout-btn">Çıkış Yap</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Onay Bekleyenler Section -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h3>Onay Bekleyenler (Belge Yükleyenler)</h3>
+            <div th:if="${onayBekleyenler.empty}" style="color: #666; font-style: italic;">Onay bekleyen öğretmen yok.
+            </div>
+            <table th:unless="${onayBekleyenler.empty}">
+                <thead>
+                    <tr>
+                        <th>Öğretmen</th>
+                        <th>Belge URL</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="detay : ${onayBekleyenler}">
+                        <td th:text="${detay.kullanici.adSoyad}"></td>
+                        <td>
+                            <a th:if="${detay.belgeUrl != null && !detay.belgeUrl.isEmpty()}"
+                                th:href="@{'/uploads/' + ${detay.belgeUrl}}" target="_blank" class="btn btn-secondary"
+                                style="padding: 5px 15px; font-size: 0.85rem;">Belgeyi Görüntüle</a>
+                            <span th:unless="${detay.belgeUrl != null && !detay.belgeUrl.isEmpty()}"
+                                style="color: #999; font-style: italic;">Belge Yok</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/ogretmen/{id}/onayla(id=${detay.id})}" class="btn"
+                                style="padding: 5px 15px; font-size: 0.85rem;">
+                                ✅ Onayla (Mavi Tik)
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Şikayetler Section -->
+        <div class="card">
+            <h3>Şikayetler</h3>
+            <div th:if="${sikayetler.empty}" style="color: #666; font-style: italic;">Bekleyen şikayet yok.</div>
+            <table th:unless="${sikayetler.empty}">
+                <thead>
+                    <tr>
+                        <th>Şikayet Eden</th>
+                        <th>Şikayet Edilen</th>
+                        <th>Konu</th>
+                        <th>Açıklama</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sikayet : ${sikayetler}">
+                        <td th:text="${sikayet.sikayetEden.adSoyad}"></td>
+                        <td th:text="${sikayet.sikayetEdilen.adSoyad}"></td>
+                        <td th:text="${sikayet.konu}"></td>
+                        <td th:text="${sikayet.aciklama}"></td>
+                        <td>
+                            <a th:href="@{/admin/sikayet/{id}/incele(id=${sikayet.id})}" class="btn btn-secondary"
+                                style="padding: 5px 15px; font-size: 0.85rem;">
+                                İncelendi İşaretle
+                            </a>
+                            <a th:href="@{/admin/kullanici/{id}/sil(id=${sikayet.sikayetEdilen.id})}"
+                                class="btn btn-danger"
+                                style="padding: 5px 15px; font-size: 0.85rem; background: #d63031;"
+                                onclick="return confirm('Bu kullanıcıyı ve tüm verilerini silmek istediğinize emin misiniz? Bu işlem geri alınamaz!')">
+                                🚫 Yasakla (Sil)
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

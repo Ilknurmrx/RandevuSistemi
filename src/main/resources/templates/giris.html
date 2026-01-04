@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Giriş Yap - Randevu Sistemi</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <h2>Giriş Yap</h2>
+        <div th:if="${hata}" class="error" th:text="${hata}"></div>
+        <form action="/giris" method="post">
+            <input type="text" name="kullaniciAdi" placeholder="Kullanıcı Adı" required>
+            <input type="password" name="sifre" placeholder="Şifre" required>
+            <button type="submit">Giriş Yap</button>
+        </form>
+        <div style="margin-top: 20px;">
+            <a href="/kayit">Hesabın yok mu? <strong>Kayıt Ol</strong></a>
+        </div>
+    </div>
+</body>
+
+</html>

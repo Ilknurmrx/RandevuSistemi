@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Kayıt Ol - Randevu Sistemi</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <h2>Kayıt Ol</h2>
+        <div th:if="${hata}" class="error" th:text="${hata}"></div>
+        <form action="/kayit" method="post" th:object="${kullanici}">
+            <input type="text" th:field="*{ad}" placeholder="Ad" required>
+            <span th:if="${#fields.hasErrors('ad')}" th:errors="*{ad}" class="error"></span>
+
+            <input type="text" th:field="*{soyad}" placeholder="Soyad" required>
+            <span th:if="${#fields.hasErrors('soyad')}" th:errors="*{soyad}" class="error"></span>
+
+            <input type="text" th:field="*{kullaniciAdi}" placeholder="Kullanıcı Adı" required>
+            <span th:if="${#fields.hasErrors('kullaniciAdi')}" th:errors="*{kullaniciAdi}" class="error"></span>
+
+            <input type="password" th:field="*{sifre}" placeholder="Şifre" required>
+            <span th:if="${#fields.hasErrors('sifre')}" th:errors="*{sifre}" class="error"></span>
+
+            <input type="email" th:field="*{email}" placeholder="E-posta (ornek@email.com)" required>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+
+            <input type="text" th:field="*{telefon}" placeholder="Telefon Numarası (5XXXXXXXXX)" pattern="5[0-9]{9}"
+                title="Telefon numarası 5 ile başlamalı ve 10 haneli olmalıdır" maxlength="10" required>
+            <span th:if="${#fields.hasErrors('telefon')}" th:errors="*{telefon}" class="error"></span>
+
+            <select th:field="*{rol}">
+                <option value="2">Öğrenciyim</option>
+                <option value="1">Öğretmenim</option>
+            </select>
+
+
+            <button type="submit">Kayıt Ol</button>
+        </form>
+        <div style="margin-top: 20px;">
+            <a href="/giris">Zaten hesabın var mı? <strong>Giriş Yap</strong></a>
+        </div>
+    </div>
+</body>
+
+</html>

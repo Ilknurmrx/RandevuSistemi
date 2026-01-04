@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8090:8090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5433/randevu_sistemi
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_SESSION_STORE_TYPE=jdbc
+      - SPRING_SESSION_JDBC_INITIALIZE_SCHEMA=always
+      - SPRING_SESSION_JDBC_PLATFORM=postgresql
+
+volumes:
+  postgres-data:

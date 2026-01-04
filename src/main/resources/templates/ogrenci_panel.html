@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Öğrenci Paneli - Randevu Sistemi</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">Öğrenci Paneli</div>
+        <div>
+            <span>Hoşgeldin, <strong th:text="${kullanici.adSoyad}"></strong></span>
+            <a href="/mesajlar" class="btn btn-secondary" style="margin-left: 15px; padding: 8px 15px;">💬 Mesajlar</a>
+            <a href="/cikis" class="btn btn-danger logout-btn" style="margin-left: 15px;">Çıkış Yap</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-grid">
+            <!-- Left Panel: Find Teachers -->
+            <div class="card">
+                <h3>Öğretmen Bul</h3>
+
+                <form action="/ogrenci" method="get" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <input type="text" name="ara" placeholder="İsim veya Branş ara..." th:value="${ara}"
+                        style="margin: 0; flex: 1;">
+                    <button type="submit" class="btn btn-secondary" style="margin: 0;">Ara</button>
+                    <a href="/ogrenci" class="btn" style="background: #ccc; margin: 0; color: #333;"
+                        th:if="${ara != null}">Sıfırla</a>
+                </form>
+
+                <div th:each="ogr : ${ogretmenler}"
+                    style="border-bottom: 1px solid #eee; padding: 15px 0; display: flex; align-items: center; gap: 15px;">
+                    <!-- Profil Fotosu (Varsayılan veya Gerçek) -->
+                    <div
+                        style="width: 50px; height: 50px; background: #eee; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <span style="font-size: 1.5rem; color: #ccc;">👤</span>
+                    </div>
+
+                    <div style="flex: 1;">
+                        <h4 th:text="${ogr.adSoyad}" style="margin: 0 0 5px 0;"></h4>
+                        <p style="color: #666; font-size: 0.9em; margin: 0;">
+                            <!-- Branşı dinamik çekemiyorsak kullanıcı adını gösteriyoruz ama normalde detaydan gelmeli. -->
+                            <!-- Şimdilik kullanıcı adını gösterelim, detayda branş var -->
+                            <span th:text="'@' + ${ogr.kullaniciAdi}"></span>
+                        </p>
+                    </div>
+
+                    <a th:href="@{/ogrenci/ogretmen/{id}(id=${ogr.id})}" class="btn"
+                        style="font-size: 0.8rem; padding: 5px 15px;">İncele</a>
+                </div>
+            </div>
+
+            <!-- Right Panel: Appointments -->
+            <div class="card">
+                <h3>Randevularım</h3>
+                <div th:each="talep : ${taleplerim}"
+                    style="background: #f8f9fa; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                    <p><strong>Öğretmen:</strong> <span th:text="${talep.ogretmen.adSoyad}"></span></p>
+                    <p><strong>Durum:</strong>
+                        <!-- Durum Takip -->
+                        <span th:if="${talep.durum == 'BEKLIYOR'}" style="color: orange; font-weight: bold;">⏳ İletildi
+                            (Hoca Henüz Görmedi)</span>
+                        <span th:if="${talep.durum == 'GORULDU'}" style="color: #0984e3; font-weight: bold;">👁️ Görüldü
+                            (Hoca İnceledi)</span>
+                        <span th:if="${talep.durum == 'ILETISIM_KURULDU'}" style="color: #6c5ce7; font-weight: bold;">📞
+                            İletişime Geçildi (Telefon Bekle)</span>
+                        <span th:if="${talep.durum == 'TAMAMLANDI'}" style="color: #00b894; font-weight: bold;">✅
+                            Tamamlandı</span>
+                        <span th:if="${talep.durum == 'REDDEDILDI'}" style="color: #d63031; font-weight: bold;">❌
+                            Reddedildi</span>
+                    </p>
+
+                    <div th:if="${talep.durum == 'TAMAMLANDI'}" style="margin-top: 10px;">
+                        <form action="/ogrenci/degerlendir" method="post">
+                            <input type="hidden" name="talepId" th:value="${talep.id}">
+                            <select name="puan">
+                                <option value="5">5 Yıldız - Mükemmel</option>
+                                <option value="4">4 Yıldız - İyi</option>
+                                <option value="3">3 Yıldız - Orta</option>
+                                <option value="2">2 Yıldız - Kötü</option>
+                                <option value="1">1 Yıldız - Berbat</option>
+                            </select>
+                            <input type="text" name="yorum" placeholder="Yorum yaz..." required>
+                            <button type="submit" class="btn btn-secondary" style="width: 100%;">Değerlendir</button>
+                        </form>
+                    </div>
+                </div>
+                <div th:if="${taleplerim.empty}" style="color: #666; font-style: italic;">Henüz randevu talebiniz yok.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

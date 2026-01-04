@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Profil Düzenle - Randevu Sistemi</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">Profil Düzenle</div>
+        <a href="/ogretmen" class="btn btn-secondary">Geri Dön</a>
+    </div>
+
+    <div class="container">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+            <h2>Profil Bilgilerini Güncelle</h2>
+            <!-- Error Messages -->
+            <div th:if="${param.error != null}"
+                style="background-color: #fab1a0; color: #d63031; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                <span th:if="${param.error[0] == 'bosalanlar'}">⚠️ Lütfen tüm zorunlu alanları doldurunuz! (Branş,
+                    Hakkında, Telefon, Email)</span>
+                <span th:if="${param.error[0] == 'belgeyok'}">⚠️ Lütfen diplomanızı veya sertifikanızı yükleyiniz!
+                    (Belge ZORUNLUDUR)</span>
+            </div>
+
+            <form action="/ogretmen/profil" method="post" enctype="multipart/form-data" th:object="${detay}"
+                onsubmit="return validateForm()">
+                <label style="font-weight: 600; color: #2d3436;">Branş:</label>
+                <input type="text" th:field="*{brans}" name="brans" placeholder="Örn: Matematik" required>
+
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="margin-top: 0; color: #0984e3;">İletişim Bilgileri</h4>
+                    <label style="font-weight: 600; color: #2d3436;">Telefon Numarası:</label>
+                    <input type="text" name="telefon" th:value="${kullanici.telefon}" required
+                        placeholder="5XX XXX XX XX">
+
+                    <label style="font-weight: 600; color: #2d3436; margin-top: 10px; display: block;">E-posta
+                        Adresi:</label>
+                    <input type="email" name="email" th:value="${kullanici.email}" required>
+                </div>
+
+                <label style="font-weight: 600; color: #2d3436;">Hakkında (CV):</label>
+                <textarea th:field="*{hakkinda}" name="hakkinda" rows="5" placeholder="Kendinizden bahsedin..." required
+                    style="resize: vertical;"></textarea>
+
+                <label style="font-weight: 600; color: #2d3436;">Profil Fotoğrafı URL:</label>
+                <input type="text" th:field="*{profilFotografiUrl}" name="profilFotografiUrl"
+                    placeholder="https://example.com/foto.jpg">
+
+                <div
+                    style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; border: 1px dashed #ccc;">
+                    <label style="font-weight: 600; color: #2d3436;">Belge Yükle (Diploma/Sertifika) <span
+                            style="color:red">*</span>:</label><br>
+                    <input type="file" name="belge" id="belgeInput"
+                        style="border: none; background: transparent; padding: 10px 0;">
+
+                    <div th:if="${detay.belgeUrl != null}" style="margin-top: 10px; font-size: 0.9em;">
+                        <strong>Mevcut Belge:</strong> <span th:text="${detay.belgeUrl}" style="color: #0984e3;"></span>
+                        <input type="hidden" id="mevcutBelgeVar" value="true">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Kaydet</button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var mevcutBelge = document.getElementById('mevcutBelgeVar');
+            var yeniBelge = document.getElementById('belgeInput');
+
+            // Eğer mevcut belge yoksa VE yeni belge seçilmediyse
+            if (!mevcutBelge && (yeniBelge.files.length === 0)) {
+                alert("Lütfen diplomanızı veya sertifikanızı yükleyiniz!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>
