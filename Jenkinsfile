@@ -92,6 +92,12 @@ pipeline {
                  sh './mvnw test -Dtest=tr.com.randevusistemi.selenium.OgrenciVitrinTest'
              }
         }
+
+        stage('Scenario 8: Kayit Validasyon') {
+            steps {
+                sh './mvnw test -Dtest=tr.com.randevusistemi.selenium.KayitValidasyonTest'
+            }
+        }
     }
     
     post {
