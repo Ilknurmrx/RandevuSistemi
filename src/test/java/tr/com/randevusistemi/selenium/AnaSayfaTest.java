@@ -8,6 +8,7 @@ public class AnaSayfaTest extends BaseSeleniumTest {
     @Test
     public void testAnaSayfaYonlendirmesi() {
         driver.get(baseUrl + "/");
+        waitForUrl("/giris");
         assertTrue(driver.getCurrentUrl().contains("/giris"), "Ana sayfa girişe yönlendirmeli");
     }
 }

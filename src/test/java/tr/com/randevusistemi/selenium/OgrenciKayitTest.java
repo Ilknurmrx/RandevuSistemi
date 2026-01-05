@@ -18,10 +18,7 @@ public class OgrenciKayitTest extends BaseSeleniumTest {
         driver.findElement(By.name("email")).sendKeys("test_ogrenci@test.com");
         // Varsayılan rol zaten öğrenci
         driver.findElement(By.tagName("button")).click();
-
-        new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(5))
-                .until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("/giris"));
-
+        waitForUrl("/giris");
         assertTrue(driver.getCurrentUrl().contains("/giris"), "Kayıt sonrası girişe yönlendirmeli");
     }
 }

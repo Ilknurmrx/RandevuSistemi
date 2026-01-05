@@ -26,12 +26,8 @@ public class BasariliGirisTest extends BaseSeleniumTest {
         driver.findElement(By.name("sifre")).sendKeys("pass");
         driver.findElement(By.tagName("button")).click();
 
-        new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(5))
-                .until(org.openqa.selenium.support.ui.ExpectedConditions.or(
-                        org.openqa.selenium.support.ui.ExpectedConditions.urlContains("/ogrenci"),
-                        org.openqa.selenium.support.ui.ExpectedConditions.urlContains("/ogretmen")));
-
         // Panele girmeli
+        waitForUrl("/ogrenci"); // Veya /ogretmen, waitForUrl contains kullandığı için yeterli
         assertTrue(driver.getCurrentUrl().contains("/ogrenci") || driver.getCurrentUrl().contains("/ogretmen"),
                 "Giriş başarılı olmalı");
     }

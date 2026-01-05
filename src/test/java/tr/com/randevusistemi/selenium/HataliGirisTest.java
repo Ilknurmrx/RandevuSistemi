@@ -13,8 +13,7 @@ public class HataliGirisTest extends BaseSeleniumTest {
         driver.findElement(By.name("kullaniciAdi")).sendKeys("yokboylebiri");
         driver.findElement(By.name("sifre")).sendKeys("yanlis");
         driver.findElement(By.tagName("button")).click();
-
-        // Hata mesajı div'i görünmeli
+        waitForElementVisible(By.className("error"));
         assertTrue(driver.findElement(By.className("error")).isDisplayed(), "Hatalı girişte uyarı görünmeli");
     }
 }

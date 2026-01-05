@@ -19,10 +19,7 @@ public class OgretmenKayitTest extends BaseSeleniumTest {
         driver.findElement(By.name("rol")).sendKeys("Öğretmenim");
 
         driver.findElement(By.tagName("button")).click();
-
-        new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(5))
-                .until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("/giris"));
-
+        waitForUrl("/giris");
         assertTrue(driver.getCurrentUrl().contains("/giris"), "Öğretmen kaydı sonrası girişe yönlendirmeli");
     }
 }

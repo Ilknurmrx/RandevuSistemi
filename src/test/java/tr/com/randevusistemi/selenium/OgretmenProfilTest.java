@@ -26,6 +26,7 @@ public class OgretmenProfilTest extends BaseSeleniumTest {
         driver.findElement(By.name("kullaniciAdi")).sendKeys(kadi);
         driver.findElement(By.name("sifre")).sendKeys("pass");
         driver.findElement(By.tagName("button")).click();
+        waitForUrl("/ogretmen");
 
         // Profil sayfasına git
         driver.findElement(By.linkText("Profil Düzenle")).click();
@@ -34,10 +35,7 @@ public class OgretmenProfilTest extends BaseSeleniumTest {
         // Bir şeyler güncelle
         driver.findElement(By.name("brans")).sendKeys("Matematik");
         driver.findElement(By.tagName("button")).click();
-
-        new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(5))
-                .until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("/ogretmen"));
-
+        waitForUrl("/ogretmen");
         assertTrue(driver.getCurrentUrl().contains("/ogretmen"), "Profil kaydı sonrası panele dönmeli");
     }
 }

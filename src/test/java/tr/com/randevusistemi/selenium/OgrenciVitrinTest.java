@@ -19,12 +19,14 @@ public class OgrenciVitrinTest extends BaseSeleniumTest {
         driver.findElement(By.name("telefon")).sendKeys("5551234455");
         driver.findElement(By.name("email")).sendKeys("vitrin_ogr@test.com");
         driver.findElement(By.tagName("button")).click();
+        waitForUrl("/giris");
 
         // Giriş
         driver.get(baseUrl + "/giris");
         driver.findElement(By.name("kullaniciAdi")).sendKeys(kadi);
         driver.findElement(By.name("sifre")).sendKeys("pass");
         driver.findElement(By.tagName("button")).click();
+        waitForUrl("/ogrenci");
 
         // Vitrinde 'Öğretmen Bul' başlığı var mı?
         boolean baslikVarMi = driver.getPageSource().contains("Öğretmen Bul");
